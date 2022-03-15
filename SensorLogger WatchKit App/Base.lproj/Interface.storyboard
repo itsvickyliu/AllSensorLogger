@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="19529" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="19514"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SensorLogger_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <button width="1" alignment="left" title="Motion Start" id="LXs-rS-dZS">
+                            <connections>
+                                <action selector="startMotionButtonPressed" destination="AgC-eL-Hgc" id="eah-pi-FZa"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Motion End" id="ZgU-hh-LAu">
+                            <connections>
+                                <action selector="endMotionButtonPressed" destination="AgC-eL-Hgc" id="DQL-hR-UAg"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Record Start" id="5dD-cJ-3gO">
+                            <connections>
+                                <action selector="startAudioButtonPressed" destination="AgC-eL-Hgc" id="PZt-EJ-gHJ"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Record End" id="RfU-AQ-GT8">
+                            <connections>
+                                <action selector="endAudioButtonPressed" destination="AgC-eL-Hgc" id="2k2-e5-MBI"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Share" id="Aq4-ou-3Yy">
+                            <connections>
+                                <action selector="shareButtonPressed" destination="AgC-eL-Hgc" id="olD-xR-d5k"/>
+                            </connections>
+                        </button>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-17" y="-6"/>
+        </scene>
+    </scenes>
+</document>
