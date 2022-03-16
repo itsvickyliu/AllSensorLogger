@@ -24,6 +24,7 @@
 		2C2B4E0E27C9DDD700BEA629 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B4E0D27C9DDD700BEA629 /* MotionManager.swift */; };
 		2C2B4E1427CDA33400BEA629 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B4E1327CDA33400BEA629 /* AudioManager.swift */; };
 		2C2B4E1627CDBCCC00BEA629 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B4E1527CDBCCC00BEA629 /* FileManager.swift */; };
+		2C66164427E185270036BBBF /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B4E1527CDBCCC00BEA629 /* FileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +303,7 @@
 				2C2B4DD827C9C74300BEA629 /* ViewController.swift in Sources */,
 				2C2B4DD427C9C74200BEA629 /* AppDelegate.swift in Sources */,
 				2C2B4DD627C9C74300BEA629 /* SceneDelegate.swift in Sources */,
+				2C66164427E185270036BBBF /* FileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

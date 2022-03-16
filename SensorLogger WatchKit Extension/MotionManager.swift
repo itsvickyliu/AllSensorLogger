@@ -8,9 +8,7 @@
 import Foundation
 import CoreMotion
 import UIKit
-#if !os(iOS)
 import WatchKit
-#endif
 
 class MotionManager {
     
@@ -18,6 +16,7 @@ class MotionManager {
     let queue = OperationQueue()
     let sampleInterval = 1.0/50
     var dataText = ""
+    var saveURL = FileManager.default.getDocumentsDirectory()
     
     init() {
         queue.maxConcurrentOperationCount = 1
@@ -42,18 +41,20 @@ class MotionManager {
         guard let filePath = self.append(toPath: self.documentDirectory(), withPathComponent: fileName) else {
             return
         }
-        
+
         do {
             let savedString = try String(contentsOfFile: filePath)
-            
+
             print(savedString)
         } catch {
             print("Error reading saved file")
         }
     }
     
-    func save(text: String, toDirectory directory: String, withFileName fileName: String) {
-        guard let filePath = self.append(toPath: directory, withPathComponent: fileName) else {
+    func save(text: String, toDirectory directory: String, withparticipantID pID: String, withsessionID sID: String) {
+        let ID = pID.appending("-\(sID).txt")
+        
+        guard let filePath = self.append(toPath: directory, withPathComponent: ID) else {
             return
         }
         
@@ -105,14 +106,23 @@ class MotionManager {
         }
     }
     
-    func endUpdates() {
+    func endUpdates(participantID pID: String, sessionID sID: String) {
         if motionManager.isDeviceMotionAvailable {
             motionManager.stopDeviceMotionUpdates()
             print ("End updates")
+//            saveURL = saveURL.appendingPathComponent(pID).appendingPathComponent(sID.appending(".txt"))
+            saveURL = saveURL.appendingPathComponent("s1.txt")
+            print (saveURL)
+//            do {
+//                try dataText.write(toFile: saveURL.absoluteString, atomically: true, encoding: .utf8)
+//            } catch {
+//                print ("Error")
+//            }
+
             self.save(text: dataText,
-                      toDirectory: self.documentDirectory(),
-                      withFileName: "testFile1.txt")
-            self.read(fromDocumentsWithFileName: "testFile1.txt")
+                      toDirectory: self.documentDirectory(), withparticipantID: "p1", withsessionID: "s1")
+            
+            self.read(fromDocumentsWithFileName: "p1-s1.txt")
             
         }
     }

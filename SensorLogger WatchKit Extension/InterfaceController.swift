@@ -19,8 +19,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     let motionManager = MotionManager()
     let audioManager = AudioManager()
-    var participantID = ""
-    var sessionID = ""
+    var url = FileManager.default.getDocumentsDirectory()
+    var participantID = "p1"
+    var sessionID = "s1"
 
     override func awake(withContext context: Any?) {
         // Configure interface objects here.
@@ -44,7 +45,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             if let participantID = applicationContext["participantID"] as? String {
                 print("\(participantID)")
             }
-        
+
             if let sessionID = applicationContext["sessionID"] as? String {
                 print("\(sessionID)")
             }
@@ -57,7 +58,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     @IBAction func endMotionButtonPressed() {
-        motionManager.endUpdates()
+        motionManager.endUpdates(participantID: participantID, sessionID: sessionID)
         audioManager.endRecording()
         
     }
@@ -71,8 +72,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     @IBAction func shareButtonPressed() {
         if (WCSession.default.isReachable) {
-            print ("hello")
-            WCSession.default.transferFile(FileManager.default.getDocuentsDirectory().appendingPathComponent("testFile1.wav"), metadata: nil)
+            WCSession.default.transferFile(FileManager.default.getDocumentsDirectory().appendingPathComponent("testFile1.wav"), metadata: nil)
+            WCSession.default.transferFile(FileManager.default.getDocumentsDirectory().appendingPathComponent("p1-s1.txt"), metadata: nil)
+            print ("Sucessfully shared")
         }
         
     }

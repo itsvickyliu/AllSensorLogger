@@ -12,7 +12,7 @@ import CloudKit
 class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
     var recordingSession: AVAudioSession!
     var recorder: AVAudioRecorder!
-    let saveURL = FileManager.default.getDocuentsDirectory().appendingPathComponent("testFile1.wav")
+    let saveURL = FileManager.default.getDocumentsDirectory().appendingPathComponent("testFile1.wav")
     var audioPlayer: AVAudioPlayer!
     
     func startRecording() {
