@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,53 +16,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Participant ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jYW-7s-nDr">
-                                <rect key="frame" x="146" y="254" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Participant ID" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jYW-7s-nDr">
+                                <rect key="frame" x="100" y="331" width="214" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Session ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ax8-qt-GVJ">
-                                <rect key="frame" x="146" y="347" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Session ID" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ax8-qt-GVJ">
+                                <rect key="frame" x="100" y="415" width="214" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="sessionIDField:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="tpK-84-wZ2"/>
-                                </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bqN-qQ-Asf">
-                                <rect key="frame" x="148" y="488" width="95" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Share Files"/>
-                                <connections>
-                                    <action selector="shareFileButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nlq-1h-WdH"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxo-SY-lz9">
-                                <rect key="frame" x="135" y="449" width="119" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="End Recording"/>
-                                <connections>
-                                    <action selector="endRecordingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A0g-A9-q4O"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uze-aK-2HT">
-                                <rect key="frame" x="133" y="100" width="125" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uze-aK-2HT">
+                                <rect key="frame" x="144.5" y="549" width="125" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Start Recording"/>
                                 <connections>
                                     <action selector="startRecordingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a3R-bX-2de"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBI-sV-59B" userLabel="Info Label">
+                                <rect key="frame" x="50" y="231" width="314" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" systemColor="systemYellowColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jYW-7s-nDr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="077-j4-4PX"/>
+                            <constraint firstItem="Uze-aK-2HT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0BA-mI-28i"/>
+                            <constraint firstItem="bBI-sV-59B" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="3CW-IJ-zur"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ax8-qt-GVJ" secondAttribute="trailing" constant="100" id="6T2-a8-9Ec"/>
+                            <constraint firstItem="Ax8-qt-GVJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="9Yb-9x-SId"/>
+                            <constraint firstItem="jYW-7s-nDr" firstAttribute="top" secondItem="bBI-sV-59B" secondAttribute="bottom" constant="100" id="CXx-Bd-AOv"/>
+                            <constraint firstItem="Ax8-qt-GVJ" firstAttribute="top" secondItem="jYW-7s-nDr" secondAttribute="bottom" constant="50" id="DaU-pz-B59"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jYW-7s-nDr" secondAttribute="trailing" constant="100" id="Qfm-sp-cM0"/>
+                            <constraint firstItem="jYW-7s-nDr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SGD-tQ-YJv"/>
+                            <constraint firstItem="Ax8-qt-GVJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="STK-dC-54B"/>
+                            <constraint firstItem="Uze-aK-2HT" firstAttribute="top" secondItem="Ax8-qt-GVJ" secondAttribute="bottom" constant="100" id="eih-MB-Ht9"/>
+                            <constraint firstItem="bBI-sV-59B" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gEL-O7-CLR"/>
+                            <constraint firstAttribute="trailing" secondItem="bBI-sV-59B" secondAttribute="trailing" constant="50" id="vFF-4B-NWQ"/>
+                            <constraint firstItem="jYW-7s-nDr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-100" id="vqn-Fd-Pck"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="infoLabel" destination="bBI-sV-59B" id="KDk-YK-K11"/>
                         <outlet property="participantIDField" destination="jYW-7s-nDr" id="e4W-89-7Ji"/>
                         <outlet property="sessionIDField" destination="Ax8-qt-GVJ" id="HV1-Ru-ogK"/>
                     </connections>
@@ -75,6 +74,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

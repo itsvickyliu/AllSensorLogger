@@ -12,10 +12,15 @@ import CloudKit
 class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
     var recordingSession: AVAudioSession!
     var recorder: AVAudioRecorder!
-    let saveURL = FileManager.default.getDocumentsDirectory().appendingPathComponent("testFile1.wav")
+    var audioURL = FileManager.default.getDocumentsDirectory()
+    var timeURL = FileManager.default.getDocumentsDirectory()
     var audioPlayer: AVAudioPlayer!
+    var timeText = ""
     
-    func startRecording() {
+    func startRecording(participantID pID: String, sessionID sID: String) {
+        audioURL = audioURL.appendingPathComponent("\(pID)-\(sID).wav")
+        timeURL = timeURL.appendingPathComponent("\(pID)-\(sID)-audiotime.txt")
+        
         let settings = [
           AVFormatIDKey: Int(kAudioFormatLinearPCM),
           AVSampleRateKey: 32000,
@@ -23,9 +28,10 @@ class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
         ]
 
         do {
-            recorder = try AVAudioRecorder(url: saveURL, settings: settings)
+            recorder = try AVAudioRecorder(url: audioURL, settings: settings)
             recorder.delegate = self
             recorder.record()
+            timeText += "Start time: \(NSDate().timeIntervalSince1970) \n"
             print ("Start recording")
         } catch {
             print ("Recording failed")
@@ -34,16 +40,15 @@ class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
     
     func endRecording() {
         recorder.stop()
+        timeText += "End time: \(NSDate().timeIntervalSince1970)"
         print ("End recording")
-        print (saveURL)
+        do {
+            try timeText.write(to: timeURL, atomically: true, encoding: .utf8)
+        } catch {
+            print("Error", error)
+            return
+        }
         recorder = nil
-        try? audioPlayer = AVAudioPlayer(contentsOf: saveURL)
-        audioPlayer?.play()
-        print("Success play audio")
-    }
-    
-    func upload() {
-        
     }
     
     func setupView() {
@@ -55,7 +60,6 @@ class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
                 recordingSession.requestRecordPermission() { [unowned self] allowed in
                     DispatchQueue.main.async {
                         if allowed {
-                            self.loadRecordingUI()
                         } else {
                             print("Failed to record")
                         }
@@ -65,9 +69,6 @@ class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
                 print("Failed to record")
             }
         }
-    
-    func loadRecordingUI(){
-    }
 
 }
 
