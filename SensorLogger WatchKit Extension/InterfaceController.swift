@@ -68,6 +68,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBAction func endMotionButtonPressed() {
         motionManager.endRecording(participantID: participantID, sessionID: sessionID)
         audioManager.endRecording()
+        recordingLabel.setText("Not Recording")
         shareButton.setEnabled(true)
         motionEndButton.setEnabled(false)
     }
