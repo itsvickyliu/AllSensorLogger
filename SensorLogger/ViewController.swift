@@ -17,6 +17,7 @@ class ViewController: UIViewController, WCSessionDelegate {
     var participantText = ""
     var sessionText = ""
     var savedText = ""
+    var savedCount = 0
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
@@ -31,27 +32,46 @@ class ViewController: UIViewController, WCSessionDelegate {
         }
         do {
             try FileManager.default.moveItem(at: file.fileURL, to: dataURL)
+            // logging to know if the audio data is saved
+            DispatchQueue.main.async {
+                self.infoLabel.text = "Saved to \(dataURL)"
+            }
         }
         catch let error{
             print (error)
         }
     }
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
-        if let motionData = userInfo["motionData"] as? String {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any] = [:]) {
+        if let motionData = message["motionData"] as? String {
             print ("Received motion data")
             savedText += motionData
-            do {
-                try savedText.write(to: FileManager.default.getDocumentsDirectory().appendingPathComponent("\(participantText)-\(sessionText)-realtime.txt"), atomically: true, encoding: .utf8)
-            } catch {
-                print("Error", error)
-                return
+            
+            // real-time logging on the phone
+            savedCount += 1
+            if savedCount % 50 == 0 {
+                DispatchQueue.main.async {
+                    self.infoLabel.text = "\(self.savedCount) data"
+                }
             }
-            do {
-                let savedString = try String(contentsOf: FileManager.default.getDocumentsDirectory().appendingPathComponent("\(participantText)-\(sessionText)-realtime.txt"))
-                print(savedString)
-            } catch {
-                print("Error reading saved file")
+        }
+        
+        // logging to know if the motion data is saved
+        if let status = message["status"] as? String {
+            if status == "end" {
+                do {
+                    try savedText.write(
+                            to: FileManager.default.getDocumentsDirectory().appendingPathComponent("\(participantText)-\(sessionText)-realtime.txt"),
+                            atomically: true,
+                            encoding: .utf8
+                        )
+                    DispatchQueue.main.async {
+                        self.infoLabel.text = "Saved motion data"
+                    }
+                } catch {
+                    print("Error", error)
+                    return
+                }
             }
         }
     }
@@ -81,6 +101,8 @@ class ViewController: UIViewController, WCSessionDelegate {
     @IBAction func startRecordingButtonPressed(_ sender: Any) {
         if (WCSession.default.isReachable) && (participantIDField.text != "") && (sessionIDField.text != "") {
             do {
+                savedCount = 0
+                savedText = ""
                 participantText = participantIDField.text as String? ?? ""
                 sessionText = sessionIDField.text as String? ?? ""
                 

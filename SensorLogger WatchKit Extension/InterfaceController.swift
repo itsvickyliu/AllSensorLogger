@@ -68,12 +68,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBAction func endMotionButtonPressed() {
         motionManager.endRecording(participantID: participantID, sessionID: sessionID)
         audioManager.endRecording()
+        WCSession.default.sendMessage(["status": "end"], replyHandler: nil)
         recordingLabel.setText("Not Recording")
         shareButton.setEnabled(true)
         motionEndButton.setEnabled(false)
     }
     
     @IBAction func shareButtonPressed() {
+        recordingLabel.setText("Sharing")
         if (WCSession.default.isReachable) {
             WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID).wav"), metadata: nil)
             WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID)-audiotime.txt"), metadata: nil)
