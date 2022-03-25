@@ -12,10 +12,7 @@ import UIKit
 import AVFoundation
 
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate {
-    
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-    }
+class InterfaceController: WKInterfaceController {
     
     let motionManager = MotionManager()
     let audioManager = AudioManager()
@@ -25,13 +22,16 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet weak var pIDLabel: WKInterfaceLabel!
     @IBOutlet weak var sIDLabel: WKInterfaceLabel!
     @IBOutlet weak var recordingLabel: WKInterfaceLabel!
-    @IBOutlet weak var motionEndButton: WKInterfaceButton!
+    @IBOutlet weak var startButton: WKInterfaceButton!
+    @IBOutlet weak var stopButton: WKInterfaceButton!
     @IBOutlet weak var shareButton: WKInterfaceButton!
     
     override func awake(withContext context: Any?) {
         // Configure interface objects here.
-        audioManager.setupView()
-        motionEndButton.setEnabled(false)
+        audioManager.setupView()  // THIS IS CRITICAL for continuing the MOTION recording.
+        recordingLabel.setText("Pair from Phone")
+        startButton.setEnabled(false)
+        stopButton.setEnabled(false)
         shareButton.setEnabled(false)
     }
     
@@ -48,37 +48,93 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         // This method is called when watch view controller is no longer visible
     }
     
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        if let pID = applicationContext["participantID"] as? String {
-            participantID = pID
-        }
-
-        if let sID = applicationContext["sessionID"] as? String {
-            sessionID = sID
-        }
-        
+    private func start() {
         motionManager.startRecording(participantID: participantID, sessionID: sessionID)
         audioManager.startRecording(participantID: participantID, sessionID: sessionID)
         recordingLabel.setText("Recording")
-        motionEndButton.setEnabled(true)
-        pIDLabel.setText(participantID)
-        sIDLabel.setText(sessionID)
+        startButton.setEnabled(false)
+        stopButton.setEnabled(true)
+        shareButton.setEnabled(false)
     }
     
-    @IBAction func endMotionButtonPressed() {
+    private func stop() {
         motionManager.endRecording(participantID: participantID, sessionID: sessionID)
         audioManager.endRecording()
         recordingLabel.setText("Not Recording")
+        startButton.setEnabled(false)
+        stopButton.setEnabled(false)
         shareButton.setEnabled(true)
-        motionEndButton.setEnabled(false)
+    }
+    
+    @IBAction func startButtonPressed() {
+
+        do {
+            try WCSession.default.sendMessage(["command": "start"], replyHandler: nil)
+            start()
+        }
+        catch {
+            print(error)
+        }
+
+        
+    }
+    
+    @IBAction func stopButtonPressed() {
+        
+        do {
+            try WCSession.default.sendMessage(["command": "stop"], replyHandler: nil)
+            stop()
+        }
+        catch {
+            print(error)
+        }
     }
     
     @IBAction func shareButtonPressed() {
+
+        recordingLabel.setText("Sharing")
         if (WCSession.default.isReachable) {
             WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID).wav"), metadata: nil)
             WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID)-audiotime.txt"), metadata: nil)
             print ("Sucessfully shared")
         }
+        startButton.setEnabled(false)
+        stopButton.setEnabled(false)
+        shareButton.setEnabled(false)
     }
 }
 
+extension InterfaceController: WCSessionDelegate {
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        
+        if let command = applicationContext["command"] as? String {
+            
+            if command == "start" {
+                start()
+            } else if command == "stop" {
+                stop()
+            }
+        } else {
+            if let pID = applicationContext["participantID"] as? String {
+                participantID = pID
+                pIDLabel.setText(participantID)
+            }
+
+            if let sID = applicationContext["sessionID"] as? String {
+                sessionID = sID
+                sIDLabel.setText(sessionID)
+            }
+            
+            if participantID != "" && sessionID != "" {
+                startButton.setEnabled(true)
+                stopButton.setEnabled(false)
+                shareButton.setEnabled(false)
+            }
+        }
+    }
+}

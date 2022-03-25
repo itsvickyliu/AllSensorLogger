@@ -48,7 +48,7 @@ class MotionManager {
                 self.tempText = "\(NSDate().timeIntervalSince1970) \(data.userAcceleration.x + data.gravity.x) \(data.userAcceleration.y + data.gravity.y) \(data.userAcceleration.z + data.gravity.z) \(data.rotationRate.x) \(data.rotationRate.y) \(data.rotationRate.z) \(data.magneticField.field.x) \(data.magneticField.field.y) \(data.magneticField.field.z) \(data.attitude.roll) \(data.attitude.pitch)  \(data.attitude.yaw) \(data.attitude.quaternion.x) \(data.attitude.quaternion.y) \(data.attitude.quaternion.z) \(data.attitude.quaternion.w) \n"
                 
                 if (WCSession.default.isReachable) {
-                    WCSession.default.transferUserInfo(["motionData": self.tempText])
+                    WCSession.default.sendMessage(["motionData": self.tempText], replyHandler: nil)
                     print ("Motion data transferred")
                 } else {
                     print ("WCSession is not activated")
