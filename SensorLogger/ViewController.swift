@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var sessionText = ""
     var savedText = ""
     var watchCnt = 0
+    var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,11 +160,16 @@ extension ViewController: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        count += 1
+        
         var dataURL = FileManager.default.getDocumentsDirectory()
-        if (file.fileURL.absoluteString.contains(".txt")) {
-            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText)-audiotime.txt")
-        } else if (file.fileURL.absoluteString.contains(".wav")) {
-            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText).wav")
+//        if (file.fileURL.absoluteString.contains(".txt")) {
+//            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText)-audiotime.txt")
+//        } else if (file.fileURL.absoluteString.contains(".caf")) {
+//            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText).caf")
+//        }
+        if (file.fileURL.absoluteString.contains(".aac")) {
+            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText)-\(count).aac")
         }
         do {
             try FileManager.default.moveItem(at: file.fileURL, to: dataURL)

@@ -28,7 +28,7 @@ class InterfaceController: WKInterfaceController {
     
     override func awake(withContext context: Any?) {
         // Configure interface objects here.
-        audioManager.setupView()  // THIS IS CRITICAL for continuing the MOTION recording.
+//        audioManager.setupView()  // THIS IS CRITICAL for continuing the MOTION recording.
         recordingLabel.setText("Pair from Phone")
         startButton.setEnabled(false)
         stopButton.setEnabled(false)
@@ -50,7 +50,12 @@ class InterfaceController: WKInterfaceController {
     
     private func start() {
         motionManager.startRecording(participantID: participantID, sessionID: sessionID)
-        audioManager.startRecording(participantID: participantID, sessionID: sessionID)
+        do {
+            try audioManager.startRecording(participantID: participantID, sessionID: sessionID)
+        }
+        catch {
+            print(error)
+        }
         recordingLabel.setText("Recording")
         startButton.setEnabled(false)
         stopButton.setEnabled(true)
@@ -93,11 +98,11 @@ class InterfaceController: WKInterfaceController {
     @IBAction func shareButtonPressed() {
 
         recordingLabel.setText("Sharing")
-        if (WCSession.default.isReachable) {
-            WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID).wav"), metadata: nil)
-            WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID)-audiotime.txt"), metadata: nil)
+//        if (WCSession.default.isReachable) {
+//            WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID).caf"), metadata: nil)
+//            WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID)-audiotime.txt"), metadata: nil)
             print ("Sucessfully shared")
-        }
+//        }
         startButton.setEnabled(false)
         stopButton.setEnabled(false)
         shareButton.setEnabled(false)
