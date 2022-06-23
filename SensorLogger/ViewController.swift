@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var sessionText = ""
     var savedText = ""
     var watchCnt = 0
+    var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,15 +103,15 @@ class ViewController: UIViewController {
                     encoding: .utf8
                 )
             DispatchQueue.main.async {
-                self.watchStatusLabel.text = "Saved motion data"
+                self.watchStatusLabel.text = "Saved motion and audio data [STUDY END]"
                 self.pairButton.isEnabled = false
                 self.startButton.isEnabled = false
                 self.stopButton.isEnabled = false
             }
         } catch {
-            print("Error", error)
+            print(error)
             DispatchQueue.main.async {
-                self.watchStatusLabel.text = "Fail to save motion data"
+                self.watchStatusLabel.text = "Failed to save motion and audio data"
             }
         }
     }
@@ -159,18 +160,12 @@ extension ViewController: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceive file: WCSessionFile) {
-        var dataURL = FileManager.default.getDocumentsDirectory()
-        if (file.fileURL.absoluteString.contains(".txt")) {
-            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText)-audiotime.txt")
-        } else if (file.fileURL.absoluteString.contains(".wav")) {
-            dataURL = dataURL.appendingPathComponent("\(participantText)-\(sessionText).wav")
-        }
+        count += 1
+        let dataURL = FileManager.default.getDocumentsDirectory().appendingPathComponent("\(participantText)-\(sessionText)-\(count).aac")
+
         do {
             try FileManager.default.moveItem(at: file.fileURL, to: dataURL)
-            // logging to know if the audio data is saved
-            DispatchQueue.main.async {
-                self.watchStatusLabel.text = "Saved Audio Files [STUDY END]"
-            }
+            
         }
         catch let error{
             print (error)
@@ -179,7 +174,6 @@ extension ViewController: WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any] = [:]) {
         if let motionData = message["motionData"] as? String {
-            print ("Received motion data")
             savedText += motionData
             
             // real-time logging on the phone

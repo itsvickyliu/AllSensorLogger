@@ -24,15 +24,12 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet weak var recordingLabel: WKInterfaceLabel!
     @IBOutlet weak var startButton: WKInterfaceButton!
     @IBOutlet weak var stopButton: WKInterfaceButton!
-    @IBOutlet weak var shareButton: WKInterfaceButton!
     
     override func awake(withContext context: Any?) {
         // Configure interface objects here.
-        audioManager.setupView()  // THIS IS CRITICAL for continuing the MOTION recording.
         recordingLabel.setText("Pair from Phone")
         startButton.setEnabled(false)
         stopButton.setEnabled(false)
-        shareButton.setEnabled(false)
     }
     
     override func willActivate() {
@@ -49,21 +46,19 @@ class InterfaceController: WKInterfaceController {
     }
     
     private func start() {
-        motionManager.startRecording(participantID: participantID, sessionID: sessionID)
         audioManager.startRecording(participantID: participantID, sessionID: sessionID)
+        motionManager.startRecording(participantID: participantID, sessionID: sessionID)
         recordingLabel.setText("Recording")
         startButton.setEnabled(false)
         stopButton.setEnabled(true)
-        shareButton.setEnabled(false)
     }
     
     private func stop() {
-        motionManager.endRecording(participantID: participantID, sessionID: sessionID)
-        audioManager.endRecording()
+        audioManager.endRecording(participantID: participantID, sessionID: sessionID)
+        motionManager.endRecording()
         recordingLabel.setText("Not Recording")
         startButton.setEnabled(false)
         stopButton.setEnabled(false)
-        shareButton.setEnabled(true)
     }
     
     @IBAction func startButtonPressed() {
@@ -88,19 +83,6 @@ class InterfaceController: WKInterfaceController {
         catch {
             print(error)
         }
-    }
-    
-    @IBAction func shareButtonPressed() {
-
-        recordingLabel.setText("Sharing")
-        if (WCSession.default.isReachable) {
-            WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID).wav"), metadata: nil)
-            WCSession.default.transferFile(url.appendingPathComponent("\(participantID)-\(sessionID)-audiotime.txt"), metadata: nil)
-            print ("Sucessfully shared")
-        }
-        startButton.setEnabled(false)
-        stopButton.setEnabled(false)
-        shareButton.setEnabled(false)
     }
 }
 
@@ -133,7 +115,6 @@ extension InterfaceController: WCSessionDelegate {
             if participantID != "" && sessionID != "" {
                 startButton.setEnabled(true)
                 stopButton.setEnabled(false)
-                shareButton.setEnabled(false)
             }
         }
     }

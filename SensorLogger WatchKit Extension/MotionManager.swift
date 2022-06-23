@@ -33,7 +33,7 @@ class MotionManager {
             return
         }
 
-        print("Start updates")
+        print("Start motion updates")
         
         motionManager.deviceMotionUpdateInterval = sampleInterval
         motionManager.startDeviceMotionUpdates(to: queue) { (data, error) in
@@ -49,7 +49,6 @@ class MotionManager {
                 
                 if (WCSession.default.isReachable) {
                     WCSession.default.sendMessage(["motionData": self.tempText], replyHandler: nil)
-                    print ("Motion data transferred")
                 } else {
                     print ("WCSession is not activated")
                 }
@@ -57,10 +56,10 @@ class MotionManager {
         }
     }
     
-    func endRecording(participantID pID: String, sessionID sID: String) {
+    func endRecording() {
         if motionManager.isDeviceMotionAvailable {
             motionManager.stopDeviceMotionUpdates()
-            print ("End updates")
+            print ("End motion updates")
         }
     }
 }
