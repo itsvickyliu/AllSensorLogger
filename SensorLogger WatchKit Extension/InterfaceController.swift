@@ -37,11 +37,17 @@ class InterfaceController: WKInterfaceController {
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
+        print("will activate!!!")
         if WCSession.isSupported() {
             let session = WCSession.default
             session.delegate = self
             session.activate()
+            print("is reachable ", session.isReachable)
         }
+    }
+    
+    override func didAppear() {
+        print("did  appear")
     }
     
     override func didDeactivate() {

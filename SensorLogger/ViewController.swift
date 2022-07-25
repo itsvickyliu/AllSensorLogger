@@ -43,6 +43,11 @@ class ViewController: UIViewController {
     
     @IBAction func pairWatch() {
         
+        print("status")
+        print(WCSession.default.isWatchAppInstalled)
+        print(WCSession.default.isPaired)
+        print(WCSession.default.isReachable)
+        
         if (WCSession.default.isReachable) && (participantIDField.text != "") && (sessionIDField.text != "") {
             do {
                 watchCnt = 0

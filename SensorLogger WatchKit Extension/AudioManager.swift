@@ -10,8 +10,9 @@ import AVFoundation
 import CloudKit
 
 class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
+
     var recordingSession: AVAudioSession!
-    var recorder: AVAudioRecorder!
+    var recorder: AVAudioRecorder?
     var audioURL = FileManager.default.getDocumentsDirectory()
     var timeURL = FileManager.default.getDocumentsDirectory()
     var audioPlayer: AVAudioPlayer!
@@ -29,17 +30,18 @@ class AudioManager:  WKInterfaceController, AVAudioRecorderDelegate{
 
         do {
             recorder = try AVAudioRecorder(url: audioURL, settings: settings)
-            recorder.delegate = self
-            recorder.record()
+            recorder?.delegate = self
+            recorder?.record()
             timeText += "Start time: \(NSDate().timeIntervalSince1970) \n"
             print ("Start recording")
         } catch {
+            
             print ("Recording failed")
         }
     }
     
     func endRecording() {
-        recorder.stop()
+        recorder?.stop()
         timeText += "End time: \(NSDate().timeIntervalSince1970)"
         print ("End recording")
         do {
